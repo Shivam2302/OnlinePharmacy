@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Online Pharmacy: Search Results</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'customer/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+{%  if user %}
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src="{% static 'customer/images/logo.png' %}" id="logoIcon" alt="Online Pharmacy">
+			</a>
+		</div>
+
+		<div id="cart">
+			<a href="{% url 'cart:showCart' %}">
+				<img src="{% static 'customer/images/cart.png' %}" alt="Cart" id="cartIcon"><span class="badge countBadge">{{ items_in_cart }}</span>
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+            <li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{% static 'customer/images/user.png' %}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ user.fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+            			<li><a href="#">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{%  url 'customer:showNotifications' %}">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'customer:logout' %}">Sign Out</a></li>
+          			</ul>
+        	</li>
+
+		</div>
+
+	</div>
+
+	<div class="userDashboardWrapper">
+		<div class="userDashboardOptions">
+
+			<div class="userName">
+				Hello,{{user.fname }}
+			</div>
+
+			<div class="userOrder">
+				<a href="{%  url 'customer:order_log' %}">
+					My Orders
+				</a>
+			</div>
+
+			<div class="userInfo activeTab">
+				Personal Information
+			</div>
+
+			<div class="userAddresses">
+				<a href="{%  url 'customer:address_log' %}">
+					Manage Addresses
+				</a>
+			</div>
+                <div class="userAddresses">
+				<a href="{%  url 'customer:showNotifications' %}">
+					Notifications
+				</a>
+			</div>
+		</div>
+
+		<div class="userDashboardPersonalInfoDetailedViewWrapper">
+        	<form class="form-horizontal" role="form">
+          		<div class="form-group">
+            		<label class="col-lg-3 control-label">First name:</label>
+            		<div class="col-lg-8">
+              			<input class="form-control" type="text" value="{{ user.fname }}">
+
+            		</div>
+          		</div>
+
+		         <div class="form-group">
+		            <label class="col-lg-3 control-label">Last name:</label>
+		            <div class="col-lg-8">
+		              <input class="form-control" type="text" value="{{ user.lname }}">
+		            </div>
+		         </div>
+
+		          <div class="form-group">
+		            <label class="col-lg-3 control-label">Email:</label>
+		            <div class="col-lg-8">
+		              <input class="form-control" type="text" value="{{ user.email }}">
+		            </div>
+		          </div>
+
+		          <div class="form-group">
+		            <label class="col-md-3 control-label">Username:</label>
+		            <div class="col-md-8">
+		              <input class="form-control" name="Username" type="text" value="{{ user.username }}">
+		            </div>
+		          </div>
+
+		          <div class="form-group">
+		            <label class="col-md-3 control-label">Password:</label>
+		            <div class="col-md-8">
+		              <input class="form-control" type="password" value="{{ user.password }}">
+		            </div>
+		          </div>
+
+		          <div class="form-group">
+		            <label class="col-md-3 control-label">Confirm password:</label>
+		            <div class="col-md-8">
+		              <input class="form-control" type="password" value="{{ user.password }}">
+		            </div>
+		          </div>
+
+            {% endif %}
+		          <div class="form-group">
+		            <label class="col-md-3 control-label"></label>
+		            <div class="col-md-8">
+                         <a href="{% url 'customer:saveChanges' %}">
+		              <input type="button" class="btn btn-primary" value="Save Changes">
+                         </a>
+		              <span></span>
+                        <a href="{% url 'customer:showDashboard1' %}">
+		              <input type="reset" class="btn btn-default" value="Cancel"></a>
+		          	</div>
+		          </div>
+
+        </form>
+
+    </div>
+
+
+	<div class="footer">
+
+	</div>
+</body>
+</html>

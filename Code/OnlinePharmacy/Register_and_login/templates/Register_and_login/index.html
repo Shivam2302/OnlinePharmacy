@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Online Pharmacy</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Register_and_login/css/style.css' %}" />
+</head>
+<body style="background-color: #5799A1">
+	<div class="landingPageWrapper">
+
+		<div id="info">
+			<img src="{% static 'Register_and_login/images/logo.png' %}" width="482" height="130">
+		</div>
+
+		<div class="choiceBoxSeller">
+			<div class="choiceBoxWrapper">
+				Sell Products
+				<div class="option">
+					<a href="/pharmacy/registration" id="register">Register</a>
+					<a href="/pharmacy/login" id="login">Login</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="choiceBoxConsumer">
+			<div class="choiceBoxWrapper">
+				Buy Products
+				<div class="option">
+					<a href="/user/registration" id="register">Register</a>
+
+					<a href="/user/login" id="login">Login</a>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="choiceBoxSkip">
+			<div class="choiceBoxWrapper">
+				<a href="{% url 'MainPage:userPage' %}" id="skip">Skip</a>
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>

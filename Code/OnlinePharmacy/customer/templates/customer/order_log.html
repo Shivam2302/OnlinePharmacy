@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Online Pharmacy: Search Results</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'customer/css/style.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+{%  if user %}
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src="{% static 'customer/images/logo.png' %}" id="logoIcon" alt="Online Pharmacy">
+			</a>
+		</div>
+
+		<div id="cart">
+			<a href="{% url 'cart:showCart' %}">
+				<img src="{% static 'customer/images/cart.png' %}" alt="Cart" id="cartIcon"><span class="badge countBadge">{{ items_in_cart }}</span>
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+        	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{% static 'customer/images/user.png' %}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ user.fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+            			<li><a href="{% url 'customer:showDashboard1' %}">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{%  url 'customer:showNotifications' %}">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'customer:logout' %}">Sign Out</a></li>
+          			</ul>
+        	</li>
+		</div>
+    </div>
+
+
+	<div class="userDashboardWrapper">
+
+		<div class="userDashboardOptions">
+			<div class="userName">
+				Hello, {{ user.fname }}
+			</div>
+
+			<div class="userOrder activeTab">
+				<a href="#">
+					My Orders
+				</a>
+			</div>
+
+			<div class="userInfo ">
+                <a href="{%  url 'customer:showDashboard1' %}">
+				Personal Information
+                </a>
+			</div>
+
+			<div class="userAddresses">
+				<a href="{%  url 'customer:address_log' %}">
+					Manage Addresses
+				</a>
+			</div>
+        <div class="userAddresses">
+				<a href="{%  url 'customer:showNotifications' %} ">
+					Notifications
+				</a>
+			</div>
+		</div>
+
+		<div class="userDashboardOrderDetailedViewWrapper">
+			<div class="userOrderItem">
+				<div class="userOrderImg">
+					<img src="images/productImage.png">
+				</div>
+
+				<div class="userOrderIDandDesc">
+					<div class="userOrderID">
+						Order #12341234-dfer1241
+					</div>
+					<div class="userOrderDesc">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit veritatis vero, fugit, quia ratione repudiandae esse in iure modi molestias ex corporis. Similique nesciunt molestias porro deleniti, aperiam est neque?
+					</div>
+				</div>
+
+				<div class="userOrderStatus">
+					<div class="userOrderStatusTitle">
+						Status
+					</div>
+
+					<div class="userOrderStatusDetail">
+						In Transit
+					</div>
+				</div>
+
+				<div class="userOrderPrice">
+					<div class="userOrderPriceTitle">
+						Final Price
+					</div>
+
+					<div class="userOrderPriceDetail">
+						Rs. 868.00
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    </div>
+	<div class="footer">
+
+	</div>
+        {% endif %}
+</body>
+</html>

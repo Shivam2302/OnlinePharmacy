@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Online Pharmacy: Search Results</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'customer/css/style.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+{%  if user %}
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src="{% static 'customer/images/logo.png' %}" id="logoIcon" alt="Online Pharmacy">
+			</a>
+		</div>
+
+		<div id="cart">
+			<a href="{% url 'cart:showCart' %}">
+				<img src="{% static 'customer/images/cart.png' %}" alt="Cart" id="cartIcon"><span class="badge countBadge">{{ items_in_cart }}</span>
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+        	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{% static 'customer/images/user.png' %}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ user.fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+            			<li><a href="{% url 'customer:showDashboard1' %}">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{%  url 'customer:showNotifications' %}">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'customer:logout' %}">Sign Out</a></li>
+          			</ul>
+        	</li>
+		</div>
+    </div>
+
+
+	<div class="userDashboardWrapper">
+
+		<div class="userDashboardOptions">
+			<div class="userName">
+				Hello, {{ user.fname }}
+			</div>
+
+			<div class="userOrder">
+				<a href="{%  url 'customer:order_log' %}">
+					My Orders
+				</a>
+			</div>
+
+			<div class="userInfo">
+				<a href="{%  url 'customer:showDashboard1' %}">
+					Personal Information
+				</a>
+			</div>
+
+			<div class="userAddresses activeTab">
+				Manage Addresses
+			</div>
+            <div class="userAddresses">
+				<a href="{%  url 'customer:showNotifications' %}">
+					Notifications
+				</a>
+			</div>
+		</div>
+
+		<div class="userDashboardAddressesViewWrapper">
+            {% if addresslist %}
+            {% for address_list in addresslist%}
+			<div class="card userAddressItem" style="width: 30rem;">
+  				<div class="card-block">
+                    {%  if address_list.default == "true" %}
+    				<h4 class="card-title">Address (default)</h4>
+                    {% else %}
+                    <h4 class="card-title">Address</h4>
+                    {% endif %}
+    				<p class="card-text"><br>
+                              Street: {{ address_list.address_street}}<br>
+                              City:{{ address_list.address_city  }}<br>
+                              State:{{ address_list.address_state  }}<br>
+                              Pincode:{{ address_list.address_pincode  }}
+
+                       </p>
+                     <form method="post">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="address_list_id" value="{{ address_list.pk }}">
+                                    <a href="/username/deleteAddress/{{ address_list.pk }}">
+								    <button type="button" class="btn btn-link btn-lg" formaction="/username/deleteAddress/" method="post">
+									<span class="glyphicon glyphicon-trash"> </span>
+								    </button>
+                                    </a>
+                                </form>
+
+  				</div>
+			</div>
+            <!-- endfor -->
+                {% endfor %}
+                {% endif %}
+
+        	<a href="{% url 'customer:addnewAddress' %}" id="addNewAddressButton" class="btn btn-primary btn-custom">Add New Address</a>
+		</div>
+
+	</div>
+     {%  endif %}
+	<div class="footer">
+
+	</div>
+</body>
+</html>

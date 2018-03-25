@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Online Pharmacy: Search Results</title>
+    {%  load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'pharmacy/css/style.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% if pharmacy %}
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src="{% static 'pharmacy/images/logo.png' %}" id="logoIcon" alt="Online Pharmacy">
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+        	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{% static 'pharmacy/images/user.png'%}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ pharmacy.owner_fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+            			<li><a href="#">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'pharmacy:showNotifications' %}">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'inventory:addItemInInventory' %}">Inventory</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'pharmacy:p_logout' %}">Sign Out</a></li>
+          			</ul>
+        	</li>
+		</div>
+
+	</div>
+
+	<div class="userDashboardWrapper">
+		<div class="userDashboardOptions">
+			<div class="userName">
+				Hello, {{ pharmacy.owner_fname }}
+			</div>
+
+			<div class="userOrder">
+				<a href="#">
+					Orders
+				</a>
+			</div>
+
+			<div class="userInfo activeTab">
+				Personal Information
+			</div>
+
+			<div class="userAddresses">
+				<a href="{% url 'pharmacy:showNotifications' %}">
+					Notifications
+				</a>
+			</div>
+
+		</div>
+
+		<div class="userDashboardPersonalInfoDetailedViewWrapper">
+        	<form class="form-horizontal" role="form">
+          		<div class="form-group">
+            		<label class="col-lg-3 control-label">First name:</label>
+            		<div class="col-lg-8">
+              			<input class="form-control" type="text" value="{{ pharmacy.owner_fname }}">
+            		</div>
+          		</div>
+
+		         <div class="form-group">
+		            <label class="col-lg-3 control-label">Last name:</label>
+		            <div class="col-lg-8">
+		              <input class="form-control" type="text" value="{{ pharmacy.owner_lname }}">
+		            </div>
+		         </div>
+
+		          <div class="form-group">
+		            <label class="col-lg-3 control-label">Email:</label>
+		            <div class="col-lg-8">
+		              <input class="form-control" type="text" value="{{ pharmacy.pharmacy_id }}">
+		            </div>
+		          </div>
+
+
+
+		          <div class="form-group">
+		            <label class="col-md-3 control-label">Password:</label>
+		            <div class="col-md-8">
+		              <input class="form-control" type="password" value="{{ pharmacy.password }}">
+		            </div>
+		          </div>
+
+		          <div class="form-group">
+		            <label class="col-md-3 control-label">Confirm password:</label>
+		            <div class="col-md-8">
+		              <input class="form-control" type="password" value="{{ pharmacy.password }}">
+		            </div>
+		          </div>
+
+		          <div class="form-group">
+		            <label class="col-md-3 control-label"></label>
+		            <div class="col-md-8">
+		              <input type="button" class="btn btn-primary btn-custom" value="Save Changes">
+		              <span></span>
+		              <input type="reset" class="btn btn-default" value="Cancel">
+		          	</div>
+		          </div>
+        </form>
+    </div>
+    </div>
+	<div class="footer">
+
+    </div>
+        {% endif %}
+</body>
+</html>

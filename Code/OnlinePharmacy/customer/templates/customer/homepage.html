@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Pharmacy: Consumer: Home</title>
+        {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'customer/css/style.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src="{% static 'customer/images/logo.png' %}" id="logoIcon" alt="Online Pharmacy">
+			</a>
+		</div>
+
+		<div id="cart">
+			<a href="{% url 'cart:showCart' %}">
+				<img src="{% static 'customer/images/cart.png' %}" alt="Cart" id="cartIcon"><span class="badge countBadge">{{ items_in_cart }}</span>
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+        	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{% static 'customer/images/user.png' %}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ user.fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+            			<li><a href="{% url 'customer:showDashboard1' %}">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{%  url 'customer:showNotifications' %}">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'customer:logout' %}">Sign Out</a></li>
+          			</ul>
+        	</li>
+		</div>
+
+	</div>
+	<div class="searchBarWrapper">
+		<div class="searchBar">
+            <form method="POST" action="{%url 'items:showSearchResult'%}" >
+                {% csrf_token %}
+			 <input class="searchBarInput col-xs-11" type="text" placeholder="Search for cure..." name="search" >
+                   <button class="searchBarButton col-xs-1">
+                        <svg width="15px" height="15px">
+                            <path d="M11.618 9.897l4.224 4.212c.092.09.1.23.02.312l-1.464 1.46c-.08.08-.222.072-.314-.02L9.868 11.66M6.486 10.9c-2.42 0-4.38-1.955-4.38-4.367 0-2.413 1.96-4.37 4.38-4.37s4.38 1.957 4.38 4.37c0 2.412-1.96 4.368-4.38 4.368m0-10.834C2.904.066 0 2.96 0 6.533 0 10.105 2.904 13 6.486 13s6.487-2.895 6.487-6.467c0-3.572-2.905-6.467-6.487-6.467 "></path>
+                        </svg>
+                   </button></form>
+		</div>
+	</div>
+
+	<div class="prescriptionBarWrapper">
+		<div class="prescriptionBar">
+			<a href="{% url 'order:prescriptionPage' %}">
+				<img src="{% static 'customer/images/prescription.png'%}" class="prescriptionImage" alt="Upload Prescription">
+			</a>
+		</div>
+	</div>
+
+	<div class="contentWrapper">
+
+	</div>
+ <!--   <div class="container">
+    <div class="col-md-12 carouselWrapper">
+        <div class="carousel slide" id="myCarousel">
+          <div class="carousel-inner">
+
+                <div class="item active">
+                  <div class="col-lg-4 col-xs-4 col-md-4 col-sm-4">
+                  <a href="#"><img src="E:\photos\diu\firstVisit\IMG_20171018_153644095.jpg" class="img-responsive"></a></div>
+                </div>
+                <div class="item">
+                  <div class="col-lg-4 col-xs-4 col-md-4 col-sm-4">
+                  <a href="#"><img src="E:\photos\diu\firstVisit" class="img-responsive"></a></div>
+                </div>
+                <div class="item">
+                  <div class="col-lg-4 col-xs-4 col-md-4 col-sm-4">
+                  <a href="#"><img src="E:\photos\diu\firstVisit\IMG_20171018_175832313_BURST000_COVER_TOP.jpg" class="img-responsive"></a></div>
+                </div>
+                <div class="item">
+                  <div class="col-lg-4 col-xs-4 col-md-4 col-sm-4">
+                  <a href="#"><img src="E:\photos\diu\firstVisit\IMG_20171018_152430644.jpg" class="img-responsive"></a></div>
+                </div>
+                <div class="item">
+                  <div class="col-lg-4 col-xs-4 col-md-4 col-sm-4">
+                  <a href="#"><img src="E:\photos\diu\firstVisit\" class="img-responsive"></a></div>
+                </div>
+
+          </div>
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+          <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+        </div>
+    </div>
+</div>
+
+
+	<div class="footer">
+
+	</div>
+
+<script type="text/javascript">
+
+$('#myCarousel').carousel({
+  interval: 40000
+});
+
+$('.carousel .item').each(function(){
+  var next = $(this).next();
+  if (!next.length) {
+    next = $(this).siblings(':first');
+  }
+  next.children(':first-child').clone().appendTo($(this));
+
+  if (next.next().length>0) {
+
+      next.next().children(':first-child').clone().appendTo($(this)).addClass('rightest');
+
+  }
+  else {
+      $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+
+  }
+});
+</script>
+-->
+
+<div class="footer">
+
+	</div>
+</body>
+</html>

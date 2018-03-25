@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Online Pharmacy: Notifications</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'customer/css/style.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+{%  if user %}
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src="{% static 'customer/images/logo.png' %}" id="logoIcon" alt="Online Pharmacy">
+			</a>
+		</div>
+
+		<div id="cart">
+			<a href="{% url 'cart:showCart' %}">
+				<img src="{% static 'customer/images/cart.png' %}" alt="Cart" id="cartIcon"><span class="badge countBadge">{{ items_in_cart }}</span>
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+        	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{% static 'customer/images/user.png' %}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ user.fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+            			<li><a href="{% url 'customer:showDashboard1' %}">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{%  url 'customer:showNotifications' %}">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'customer:logout' %}">Sign Out</a></li>
+          			</ul>
+        	</li>
+		</div>
+    </div>
+
+
+	<div class="userDashboardWrapper">
+
+		<div class="userDashboardOptions">
+			<div class="userName">
+				Hello, {{ user.fname }}
+			</div>
+
+			<div class="userOrder">
+				<a href="{%  url 'customer:order_log' %}">
+					My Orders
+				</a>
+			</div>
+
+			<div class="userInfo">
+				<a href="{%  url 'customer:showDashboard1' %}">
+					Personal Information
+				</a>
+			</div>
+
+			<div class="userAddresses ">
+                <a href="{%  url 'customer:address_log' %}">
+				Manage Addresses
+                </a>
+			</div>
+            <div class="userAddresses activeTab">
+				<a href="#">
+					Notifications
+				</a>
+			</div>
+		</div>
+
+
+		<div class="userDashboardNotificationViewWrapper">
+
+			<!--<div class="card notificationItem newNotificationItem">
+  				<div class="card-block">
+    				<h4 class="card-title">Card title</h4>
+    				<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, doloribus dignissimos. Repellendus ipsa esse doloribus beatae rem veritatis odit nostrum quas qui laboriosam voluptatum sint corporis natus soluta mollitia similique enim, odio! Repellat, voluptas inventore, ipsa incidunt ut odit non dolor fugiat delectus placeat aspernatur nobis facere unde nesciunt blanditiis!</p>
+    				<a href="#" class="btn btn-primary btn-custom">Accept</a>
+  				</div>
+			</div>
+
+			<div class="card notificationItem newNotificationItem">
+  				<div class="card-block">
+    				<h4 class="card-title">Card title</h4>
+    				<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, doloribus dignissimos. Repellendus ipsa esse doloribus beatae rem veritatis odit nostrum quas qui laboriosam voluptatum sint corporis natus soluta mollitia similique enim, odio! Repellat, voluptas inventore, ipsa incidunt ut odit non dolor fugiat delectus placeat aspernatur nobis facere unde nesciunt blanditiis!</p>
+    				<a href="#" class="btn btn-primary btn-custom">Accept</a>
+  				</div>
+			</div>-->
+            {%  if notification_list %}
+                {%  for notification in notification_list%}
+
+			<div class="card notificationItem">
+  				<div class="card-block">
+    				<h4 class="card-title">Notice:</h4><!--doubt heading?-->
+    				<p class="card-text">{{ notification.content }}</p>
+  				</div>
+			</div>
+                {% endfor %}
+            {%endif%}
+
+
+		</div>
+{% endif %}
+
+
+	</div>
+
+	<div class="footer">
+
+	</div>
+</body>
+</html>

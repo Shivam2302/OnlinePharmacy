@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Online Pharmacy: Search Results</title>
+    {%  load staticfiles  %}
+	<link rel="stylesheet" type="text/css" href="{% static 'items/css/style.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% if user %}
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src="{%  static 'items/images/logo.png' %}" id="logoIcon"  alt="Online Pharmacy" >
+			</a>
+		</div>
+
+		<div id="cart">
+			<a href="{% url 'cart:showCart' %}">
+				<img src="{%  static 'items/images/cart.png' %}" id="cartIcon" alt="Cart"><span class="badge countBadge">{{ items_in_cart }}</span>
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+            <li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{%  static 'items/images/user.png' %}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ user.fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+
+            			<li><a href="{% url 'customer:showDashboard1' %}">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{%  url 'customer:showNotifications' %}">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'customer:logout' %}">Sign Out</a></li>
+
+          			</ul>
+        	</li>
+		</div>
+
+	</div>
+
+	<div class="searchBarWrapper">
+		<div class="searchBar">
+			 <input class="searchBarInput col-xs-11" type="" placeholder="Search for cure..." name="">
+                    <button class="searchBarButton col-xs-1">
+                        <svg width="15px" height="15px">
+                            <path d="M11.618 9.897l4.224 4.212c.092.09.1.23.02.312l-1.464 1.46c-.08.08-.222.072-.314-.02L9.868 11.66M6.486 10.9c-2.42 0-4.38-1.955-4.38-4.367 0-2.413 1.96-4.37 4.38-4.37s4.38 1.957 4.38 4.37c0 2.412-1.96 4.368-4.38 4.368m0-10.834C2.904.066 0 2.96 0 6.533 0 10.105 2.904 13 6.486 13s6.487-2.895 6.487-6.467c0-3.572-2.905-6.467-6.487-6.467 "></path>
+                        </svg>
+                    </button>
+		</div>
+	</div>
+
+	<div class="searchResultWrapper">
+		<div class="searchOptionsWrapper">
+
+			<div class="searchParameterItem">
+				<div class="searchParameterName">
+					Price Range
+				</div>
+				<div class="searchParamterSubName">
+					From
+					<div class="searchParameterValue">
+						<input type="text" placeholder="0">
+					</div>
+				</div>
+				<div class="searchParamterSubName">
+					To
+					<div class="searchParameterValue">
+						<input type="text" placeholder="1000">
+					</div>
+				</div>
+			</div>
+
+			<div class="searchParameterItem">
+				<div class="searchParameterName">
+					Category
+					<div class="searchParameterValue">
+						All
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="searchListWrapper">
+            {% if items %}
+        {% for item in items %}
+			<div class="searchResultItem">
+				<div class="searchImage">
+					 <img src="{{ item.image.url }}">
+				</div>
+
+				<div class="searchResultName">
+                    <a href="{% url 'items:showSearchResultPharmacy' item.item_id %}">{{ item.item_name }}</a>
+				</div>
+
+				<div class="searchResultDescription">
+					<p> Category: {{ item.category }}<br>
+                        Specifications: {{ item.specifications }}
+                    </p>
+				</div>
+
+				<div class="searchResultSaltComposition">
+					 {{ item.salts }}
+				</div>
+
+				<div class="searchResultAddToCart">
+					<a href="{% url 'cart:addItem' item.item_id %}">
+						<div class="addToCartButton">
+							Add to Cart
+						</div>
+					</a>
+				</div>
+
+
+			</div>
+            {% endfor %}
+        {% endif %}
+			<!--<div class="searchResultItem">
+				<div class="searchImage">
+					<img src="images/productImage.png">
+				</div>
+
+				<div class="searchResultName">
+					Item Name
+				</div>
+
+				<div class="searchResultDescription">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex adipisci eius, nostrum nulla tempora explicabo corporis, deleniti saepe nihil fuga.
+				</div>
+
+				<div class="searchResultSaltComposition">
+					<ul>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+					</ul>
+				</div>
+
+				<div class="searchResultAddToCart">
+					<a href="#">
+						<div class="addToCartButton">
+							Add to Cart
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="searchResultItem">
+				<div class="searchImage">
+					<img src="images/productImage.png">
+				</div>
+
+				<div class="searchResultName">
+					Item Name
+				</div>
+
+				<div class="searchResultDescription">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex adipisci eius, nostrum nulla tempora explicabo corporis, deleniti saepe nihil fuga.
+				</div>
+
+				<div class="searchResultSaltComposition">
+					<ul>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+					</ul>
+				</div>
+
+				<div class="searchResultAddToCart">
+					<a href="#">
+						<div class="addToCartButton">
+							Add to Cart
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="searchResultItem">
+				<div class="searchImage">
+					<img src="images/productImage.png">
+				</div>
+
+				<div class="searchResultName">
+					Item Name
+				</div>
+
+				<div class="searchResultDescription">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex adipisci eius, nostrum nulla tempora explicabo corporis, deleniti saepe nihil fuga.
+				</div>
+
+				<div class="searchResultSaltComposition">
+					<ul>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+						<li>Lorem ipsum.</li>
+					</ul>
+				</div>
+
+				<div class="searchResultAddToCart">
+					<a href="#">
+						<div class="addToCartButton">
+							Add to Cart
+						</div>
+					</a>
+				</div>
+			</div>-->
+		</div>
+    {% endif %}
+
+	<div class="contentWrapper">
+
+	</div>
+
+	<div class="footer">
+
+	</div>
+</body>
+</html>

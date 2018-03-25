@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+
+  <title>Online Pharmacy: Consumer: Home</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'pharmacy/css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'pharmacy/css/dropzone.css'%}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="{% static 'inventory/js/dropzone.js' %}"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+{% if user %}
+<body>
+
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src="{% static 'pharmacy/images/logo.png'%}" id="logoIcon" alt="Online Pharmacy">
+			</a>
+		</div>
+
+		<div id="cart">
+			<a href="{% url 'cart:showCart' %}">
+				<img src="{% static 'pharmacy/images/cart.png'%}" alt="Cart" id="cartIcon"><span class="badge countBadge">{{ items_in_cart }}</span>
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+        	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{% static 'pharmacy/images/user.png'%}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ user.fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+            			<li><a href="% url 'customer:showDashboard1' %}">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{%  url 'customer:showNotifications' %}">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'customer:logout' %}">Sign Out</a></li>
+          			</ul>
+        	</li>
+		</div>
+
+	</div>
+
+	<div class="searchBarWrapper">
+		<div class="searchBar">
+			 <input class="searchBarInput col-xs-11" type="" placeholder="Search for cure..." name="">
+                    <button class="searchBarButton col-xs-1">
+                        <svg width="15px" height="15px">
+                            <path d="M11.618 9.897l4.224 4.212c.092.09.1.23.02.312l-1.464 1.46c-.08.08-.222.072-.314-.02L9.868 11.66M6.486 10.9c-2.42 0-4.38-1.955-4.38-4.367 0-2.413 1.96-4.37 4.38-4.37s4.38 1.957 4.38 4.37c0 2.412-1.96 4.368-4.38 4.368m0-10.834C2.904.066 0 2.96 0 6.533 0 10.105 2.904 13 6.486 13s6.487-2.895 6.487-6.467c0-3.572-2.905-6.467-6.487-6.467 "></path>
+                        </svg>
+                    </button>
+		</div>
+	</div>
+ <div id="prescriptionUploadWrapper">
+    <div id="prescriptionTitle">Prescription</div>
+    <form name="prescription" method="post" action="#" class="dropzone" id="my-awesome-dropzone">
+        {% csrf_token %}
+      <div class="fallback">
+        <input name="file" type="file" multiple />
+      </div>
+
+
+    <br>
+    <div>
+      <p class="prescriptionQuestion">Do you want the Pharmacy to call you?</p>
+      <form name="prescription" method="post">
+          {% csrf_token %}
+        <div class="radio">
+          <label><input type="radio" name="pharmacyCall">Yes</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="pharmacyCall">No</label>
+        </div>
+    </form>
+    </div>
+
+    <div>
+      <p class="prescriptionQuestion">Would you like us to suggest same salt medicines?</p>
+      <form name="prescription" method="post">
+          {% csrf_token %}
+        <div class="radio">
+          <label><input type="radio" name="genericMed">Yes</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="genericMed">No</label>
+        </div>
+    </form>
+    </div>
+      <br>
+      <div class="col-md-6">
+        <button type="submit" class="btn btn-primary btn-custom" name=Submit >Submit Prescripion</button>
+      </div>
+    </form>
+  </div>
+
+
+
+  </div>
+ <div class="footer">
+
+	</div>
+
+{% endif %}
+</body>
+</html>

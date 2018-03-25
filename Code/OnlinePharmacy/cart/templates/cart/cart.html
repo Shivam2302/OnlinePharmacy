@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+        <title>Cart</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Cart" />
+        <link rel="shortcut icon" href="logo.png">
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'customer/css/style.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body {
+	margin-top: 20px;
+    }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{%  static 'cart/css/bootstrap.css' %}" />
+</head>
+<body>
+{%  if user %}
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src="{% static 'customer/images/logo.png' %}" id="logoIcon" alt="Online Pharmacy">
+			</a>
+		</div>
+
+		<div id="cart">
+			<a href="/username/cart">
+				<img src="{% static 'customer/images/cart.png' %}" alt="Cart" id="cartIcon"><span class="badge countBadge">{{ items_in_cart }}</span>
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+        	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{% static 'customer/images/user.png' %}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ user.fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+            			<li><a href="{% url 'customer:showDashboard1' %}">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{%  url 'customer:showNotifications' %}">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'customer:logout' %}">Sign Out</a></li>
+          			</ul>
+        	</li>
+		</div>
+    </div>
+
+
+
+
+<div class="container-fluid">
+
+	<div class="row">
+		<div class="col-sm-10 col-sm-offset-1" >
+			<div class="panel panel-info">
+				<div class="panel-heading" style="background-color: #95989A">
+					<div class="panel-title">
+						<div class="row">
+                            <div class="col-sm-6">
+								<h4><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h4>
+							</div>
+                            <div class="col-sm-2">
+
+                            </div>
+							<div class="col-sm-4">
+                                <a href="{% url 'customer:showHomepage1' %}">
+								<button  style="margin-top: 1%;margin-left: 40%;padding-right: 4%;padding-left: 4%;background-color: #5799A1;font-size: medium" type="button" class="btn btn-primary btn-md  ">
+									<span class="glyphicon glyphicon-share-alt"></span> Continue shopping
+
+								</button>
+                                </a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+
+
+                    {% if item %}
+                    {%  for a in item %}
+
+					<div class="row">
+						<div class="col-sm-2"><img class="img-responsive" src="{{ a.11.url}}">
+						</div>
+						<div class="col-sm-4">
+							<h4 class="product-name"><strong></strong></h4><h4><large>{{ a.10}}</large><br>{{ a.4 }}</h4>
+						</div>
+						<div class="col-sm-6">
+					 		<div class="col-sm-6 text-right">
+								<h4><strong>{{ a.2 }} <span class="text-muted"> x</span></strong></h4>
+							</div>
+							<div class="col-sm-4">
+                                <strong>	<input type="number"  class="form-control input-md" value="{{ a.6 }}"> </strong>
+							</div>
+							<div class="col-sm-3">
+
+
+                                <form method="post">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="item_id" value="{{ a.9 }}">
+                                    <a href="/username/deletefromcart/{{ a.9 }}/{{ a.4 }}">
+								    <button type="button" class="btn btn-link btn-lg" formaction="/username/deletefromcart/" method="post">
+									<span class="glyphicon glyphicon-trash"> </span>
+								    </button>
+                                    </a>
+                                     <a href="/username/itemCheckout/{{ a.8}}">
+											<button type="button" class="btn btn-success btn-block">
+												Checkout
+											</button>
+                            			</a>
+
+                                </form>
+							</div>
+						</div>
+					</div>
+                    <hr>
+					<hr>
+
+
+
+					<div class="row">
+						<div class="text-center">
+							<div class="col-sm-9">
+                                <h5 class="text-right"><strong>Added items?</strong> </h5>
+							</div>
+							<div class="col-sm-3">
+                                <a href="/username/updateCart/{{ a.5 }}">
+								<button type="button" style="background-color: #5799A1 ;color: white" class="btn btn-default btn-md btn-block">
+									Update cart
+								</button>
+                                </a>
+							</div>
+						</div>
+					</div>
+                          {%  endfor %}
+                    {%  endif %}
+				</div>
+
+				<div class="panel-footer">
+					<div class="row text-center">
+						<div class="col-sm-9">
+
+                            <h4 class="text-right"><strong>Total - </strong> <strong>{{ totalCost }}</strong></h4>
+						</div>
+						<div class="col-sm-3">
+                            <a href="">
+							<button type="button" class="btn btn-success btn-block">
+								Checkout
+							</button>
+                            </a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endif %}
+<footer>
+    <br>
+    <br>
+    <br>
+</footer>
+
+</body>
+</html>

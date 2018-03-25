@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>
+           Add New Product
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Registration" />
+        {% load staticfiles %}
+        <link rel="shortcut icon" href="{% static 'inventory/images/logo.png' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'Register_and_login/css/bootstrap.css' %}" />
+        <style>
+             body{background-color: #5799A1}
+        </style>
+    </head>
+    <body>
+        <br>
+        <br>
+        <header>
+                <div class="container-fluid">
+                    <div class="col-sm-4 col-sm-offset-4 " id="imgdiv" >
+                        <img class="img-responsive" src="{% static 'inventory/images/logo.png' %}" width="482" height="130"  >
+                    </div>
+                </div>
+        </header>
+        <br>
+        <br>
+        <div class="wrapper">
+            <div class="col-sm-4 col-sm-offset-4" style="background-color: white;">
+               <form action="" method="post">
+                   <h1 >
+                       <center>
+                            Add New Product
+                       </center>
+                   </h1>
+                   {%csrf_token%}
+                   {% for field in form %}
+                      <div class="form-group">
+                          <p>
+                            {{field.label_tag}}<br>{{field}}
+                          </p>
+                          {% for error in field.errors %}
+                            <p style="color:red">
+                                {{error}}
+                            </p>
+                          {% endfor %}
+                      </div>
+                   {% endfor %}
+
+                   <br>
+                   <input type="submit" value="Register">
+               </form>
+               <br>
+            </div>
+        </div>
+    </body>
+</html>

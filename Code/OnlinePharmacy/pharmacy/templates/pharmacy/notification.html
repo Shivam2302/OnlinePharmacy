@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Online Pharmacy: Search Results</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'pharmacy/css/style.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% if pharmacy %}
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src={% static 'pharmacy/images/logo.png' %} id="logoIcon" alt="Online Pharmacy">
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+        	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{% static 'pharmacy/images/user.png' %}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ pharmacy.owner_fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+            			<li><a href="{%  url 'pharmacy:showDashboard2' %}">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'pharmacy:showNotifications' %}">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'inventory:addItemInInventory' %}">Inventory</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'pharmacy:p_logout' %}">Sign Out</a></li>
+          			</ul>
+        	</li>
+		</div>
+
+
+	</div>
+
+	<div class="userDashboardWrapper">
+		<div class="userDashboardOptions">
+			<div class="userName">
+				Hello,	{{ pharmacy.owner_fname }}
+			</div>
+
+			<div class="userOrder">
+				<a href="#">
+					Orders
+				</a>
+			</div>
+
+			<div class="userInfo">
+				<a href="{% url 'pharmacy:showDashboard2' %}">
+					Personal Information
+				</a>
+			</div>
+
+			<div class="userAddresses activeTab">
+				Notifications
+			</div>
+
+
+		</div>
+
+		<div class="userDashboardNotificationViewWrapper">
+            {% if notifications_notfulfilled %}
+                {% for a in notifications_notfulfilled %}
+
+
+
+			<div class="card notificationItem newNotificationItem">
+  				<div class="card-block">
+    				<h4 class="card-title">Card title</h4>
+    				<p class="card-text"> {{ a.content }}<br>{{ a.sent_by_customer_id }}</p>
+    				<form action="{% url 'pharmacy:acceptNotification' a.prescription_id_id %}" method="post">
+                         {% csrf_token %}
+                             <button type="submit" name=Submit">accept</button>
+                    </form>
+  				</div>
+			</div>
+                {% endfor %}
+                {% endif %}
+        {% if notifications_fulfilled %}
+                {% for a in notifications_fulfilled %}
+
+
+
+			<div class="card notificationItem newNotificationItem">
+  				<div class="card-block">
+    				<h4 class="card-title">Card title</h4>
+    				<p class="card-text"> {{ a.content }}<br>{{ a.sent_by_customer_id }}</p>
+
+  				</div>
+			</div>
+                {% endfor %}
+                {% endif %}
+
+			<!--<div class="card notificationItem newNotificationItem">
+  				<div class="card-block">
+    				<h4 class="card-title">Card title</h4>
+    				<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, doloribus dignissimos. Repellendus ipsa esse doloribus beatae rem veritatis odit nostrum quas qui laboriosam voluptatum sint corporis natus soluta mollitia similique enim, odio! Repellat, voluptas inventore, ipsa incidunt ut odit non dolor fugiat delectus placeat aspernatur nobis facere unde nesciunt blanditiis!</p>
+    				<a href="#" class="btn btn-primary btn-custom">Accept</a>
+  				</div>
+			</div>
+
+			<div class="card notificationItem">
+  				<div class="card-block">
+    				<h4 class="card-title">Card title</h4>
+    				<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, doloribus dignissimos. Repellendus ipsa esse doloribus beatae rem veritatis odit nostrum quas qui laboriosam voluptatum sint corporis natus soluta mollitia similique enim, odio! Repellat, voluptas inventore, ipsa incidunt ut odit non dolor fugiat delectus placeat aspernatur nobis facere unde nesciunt blanditiis!</p>
+  				</div>
+			</div>
+
+			<div class="card notificationItem">
+  				<div class="card-block">
+    				<h4 class="card-title">Card title</h4>
+    				<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, doloribus dignissimos. Repellendus ipsa esse doloribus beatae rem veritatis odit nostrum quas qui laboriosam voluptatum sint corporis natus soluta mollitia similique enim, odio! Repellat, voluptas inventore, ipsa incidunt ut odit non dolor fugiat delectus placeat aspernatur nobis facere unde nesciunt blanditiis!</p>
+  				</div>
+			</div>-->
+
+		</div>
+
+	</div>
+
+
+	<div class="footer">
+
+	</div>
+{% endif %}
+</body>
+</html>

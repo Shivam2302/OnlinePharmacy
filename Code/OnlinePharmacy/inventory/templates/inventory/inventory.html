@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Online Pharmacy: Consumer: Home</title>
+    {%  load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% if pharmacy %}
+
+	<div class="navBarWrapper">
+		<div id="logo">
+			<a href="#">
+				<img src="{% static 'inventory/images/logo.png' %}" id="logoIcon" alt="Online Pharmacy" >
+			</a>
+		</div>
+
+		<div id="accountAvatar">
+        	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<img src="{% static 'inventory/images/user.png' %}" id="userIcon"><span class="glyphicon glyphicon-asterisk" style="color: white"></span>
+          			<div id="currentUserName">
+          				{{ pharmacy.owner_fname }}
+          			</div>
+          		</a>
+          			<ul class="dropdown-menu">
+            			<li><a href="{%  url 'pharmacy:showDashboard2' %}">Dashboard</a></li>
+            			<li class="divider"></li>
+            			<li><a href="#">Notification</a></li>
+            			<li class="divider"></li>
+            			<li><a href="{% url 'inventory:showInventory' %}">Inventory</a></li>
+            			<li class="divider"></li>
+            			<li><a href="#">Sign Out</a></li>
+          			</ul>
+        	</li>
+		</div>
+
+
+	</div>
+
+	<div class="inventoryContentWrapper">
+		<div class="dashboardButton">
+			<a href="{% url 'pharmacy:showDashboard2' %}">
+				Dashboard
+			</a>
+
+		</div>
+
+		<div id="inventoryName">
+			Inventory
+		</div>
+
+		<div class="requestNewItemButton">
+			<a href="{% url 'pharmacy:inventory:addNewProduct' %}">
+				Request New Item
+			</a>
+		</div>
+	</div>
+
+		<div class="inventoryListContentWrapper">
+			<div class="inventoryHeaders">
+				<div id="name">
+					Name
+				</div>
+				<div id="quantity">
+					Quantity
+				</div>
+				<div id="description">
+					Description
+				</div>
+				<div id="saltComposition">
+					Composition
+				</div>
+				<div id="options">
+					Options
+				</div>
+			</div>
+
+			<div id="addNewItem">
+				<a href="{% url 'inventory:addItemInInventory' %}">
+					Add new Item
+				</a>
+			</div>
+			<br>
+            {%  if item %}
+                     {%  for item in item  %}
+            <div class="productItemWrapper">
+				<div class="itemName">
+					{{  item.6}}
+				</div>
+				<div class="itemQuantity">
+					{{ item.1 }}
+				</div>
+				<div class="itemDescription">
+					 Category: {{ item.12 }}<br>
+                        Specifications: {{ item.11 }}
+				</div>
+
+				<div class="itemSaltComposition">
+					{{ item.10 }}
+				</div>
+				<div class="itemOptions">
+					<a href="#">
+						Modify
+					</a>
+					/
+					<a href="#">
+						Remove
+					</a>
+				</div>
+			</div>
+            {% endfor%}
+    {% endif %}
+		</div>
+
+
+	<div class="footer">
+
+	</div>
+{% endif %}
+</body>
+</html>
